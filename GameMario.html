@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script src="scripts/_references.js"></script>
+    <script src="scripts/socket.io.js"></script>
+    <script src="Game/Base.js"></script>
+    <script src="Game/Util.js"></script>
+    <script src="Game/Container.js"></script>
+    <script src="Game/Drawer.js"></script>
+    <script src="Game/Shape.js"></script>
+    <script src="Game/CSSDrawer.js"></script>
+    <script src="Game/Scenario.js"></script>
+    <script src="Game/Direction.js"></script>
+    <script src="Game/Moveable.js"></script>
+    <script src="Game/MoveableShape.js"></script>
+    <script src="Game/ContinuousMoveable.js"></script>
+    <script src="Game/Game.js"></script>
+    <script src="Game/GameClient.js"></script>
+    <script src="Game/Direction.js"></script>
+    <script src="Game/KeyControl.js"></script>
+    <script src="Game/ControlableShape.js"></script>
+    <script src="GameMario/Player.js"></script>
+
+    <script src="GameMario/ScenarioTest.js"></script>
+    <script src="Game/ShapeAnimation.js"></script>
+    <script src="Game/StatusShapeAnimation.js"></script>
+    <script src="Game/StepShapeAnimation.js"></script>
+    <script src="Game/AccelerateMoveable.js"></script>
+
+    <script src="GameMario/SmallMario.js"></script>
+    <script src="GameMario/SmallLuigi.js"></script>
+    <script src="GameMario/TallMario.js"></script>
+
+    <script src="GameNovo/NewPlayer.js"></script>
+    <script src="GameNovo/Person.js"></script>
+    <script src="GameNovo/MegaMan.js"></script>
+
+    <script src="GameMario/BlockType.js"></script>
+    <script src="GameMario/Block.js"></script>
+    <script src="GameMario/BlockGrass.js"></script>
+    <script src="GameMario/Mushroom.js"></script>
+    <script src="GameMario/Enemy.js"></script>
+    <script src="GameMario/WalkTurtle.js"></script>
+    <script src="GameMario/Interrogation.js"></script>
+    <script src="GameMario/EmptyBlock.js"></script>
+    <script src="GameMario/BigGrassDecorator1.js"></script>
+    <script src="GameMario/BigGrassDecorator2.js"></script>
+    <script src="GameMario/BlockCreator.js"></script>
+    <script src="GameMario/PipeCreator.js"></script>
+    <script src="GameMario/PipeColor.js"></script>
+    <script src="GameMario/DecorationCreator.js"></script>
+    <script src="GameMario/DecorationType.js"></script>
+    <script src="GameMario/Scenario1.js"></script>
+    <script src="Game/ShapeImage.js"></script>
+    <script>
+
+
+        $(function () {
+
+            $(document).on("keydown", keyDown);
+            $(document).on("keyup", keyUp);
+
+            GameClient.playersName.push("player1");
+            GameClient.start();
+            
+
+            //var player1 = new SmallMario("player1", {
+            //    top: 10,
+            //    left: 1 * 32,
+            //    direction: Direction.RIGHT,
+            //    keyWalkRight: 68,
+            //    keyWalkLeft: 65,
+            //    keyJump: 87,
+            //    keyRun: 16
+            //});
+
+
+            //var player2 = new SmallLuigi("player2", {
+            //    top: 10,
+            //    left: 20 * 32,
+            //    direction: Direction.LEFT,
+            //    keyWalkRight: 75,
+            //    keyWalkLeft: 72,
+            //    keyJump: 85,
+            //    keyRun: 76
+            //});
+
+
+
+            //Game.scenario = new Scenario1({
+            //    "player1": player1
+            //    //, "player2": player2
+            //});
+            //Game.playersName.push("player1");
+            //Game.framePerSecond = 60;
+            //Game.height = 450;
+            //Game.width = 700;
+            //Game.jQueryContainer = $("#game");
+            //Game.printFrame = function (msg) {
+            //    $("#logFrame").html(msg);
+            //};
+
+
+            //$("#fpsText").val(Game.framePerSecond);
+
+            //$("#direitaP1Select").val(player1.keyWalkRight);
+            //$("#esquerdaP1Select").val(player1.keyWalkLeft);
+            //$("#pulaP1Select").val(player1.keyJump);
+            //$("#correP1Select").val(player1.keyRun);
+
+            //$("#direitaP2Select").val(player2.keyWalkRight);
+            //$("#esquerdaP2Select").val(player2.keyWalkLeft);
+            //$("#pulaP2Select").val(player2.keyJump);
+            //$("#correP2Select").val(player2.keyRun);
+
+            $("#configButton").on("click", config);
+
+            Game.start();
+
+        });
+
+        function keyDown(e) {
+            //Game.addKey(e.keyCode);
+            GameClient.addKey(e.keyCode);
+        }
+
+        function keyUp(e) {
+            //Game.removeKey(e.keyCode);
+            GameClient.removeKey(e.keyCode);
+        }
+
+        function config() {
+            var player1 = Game.getShape("player1");
+
+            var player2 = Game.getShape("player2");
+
+            Game.framePerSecond = $("#fpsText").val();
+            player1.keyWalkRight = $("#direitaP1Select").val();
+            player1.keyWalkLeft = $("#esquerdaP1Select").val();
+            player1.keyJump = $("#pulaP1Select").val();
+            player1.keyRun = $("#correP1Select").val();
+            player1.config();
+
+
+            if (player2) {
+                player2.keyWalkRight = $("#direitaP2Select").val();
+                player2.keyWalkLeft = $("#esquerdaP2Select").val();
+                player2.keyJump = $("#pulaP2Select").val();
+                player2.keyRun = $("#correP2Select").val();
+                player2.config();
+            }
+
+            $.ajax({
+                url: "/remotegame",
+                async: false,
+                data: { name: "teste allison" },
+                dataType: "json",
+                cache: false,
+                success: function (a, b, c) {
+                    alert(a.name);
+                }
+            });
+
+        }
+
+    </script>
+</head>
+<body>
+    <div id="logFrame"></div>
+    <div id="game" style="background-color: yellowgreen; height: 500px; width: 700px; overflow: hidden; float: left"></div>
+    <div id="Div1" style="background-color: black; height: 500px; width: 500px; overflow: hidden; float: left; color: white">
+        <table>
+            <tbody>CONFIGURAÇÕES</tbody>
+            <tr>
+                <td style="vertical-align: top;">
+                    <table>
+                        <tr style="text-align: center;">
+                            <td colspan="2">JOGO</td>
+                        </tr>
+                        <tr>
+                            <td>FPS:
+                                <input type="number" id="fpsText" style="width: 50px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr style="text-align: center;">
+                            <td colspan="2">PLAYER 1</td>
+                        </tr>
+                        <tr>
+                            <td>DIREITA:
+                            </td>
+                            <td>
+                                <select id="direitaP1Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ESQUERDA:
+                            </td>
+                            <td>
+                                <select id="esquerdaP1Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PULA:
+                            </td>
+                            <td>
+                                <select id="pulaP1Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CORRE:
+                            </td>
+                            <td>
+                                <select id="correP1Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr style="text-align: center;">
+                            <td colspan="2">PLAYER 2</td>
+                        </tr>
+                        <tr>
+                            <td>DIREITA:
+                            </td>
+                            <td>
+                                <select id="direitaP2Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ESQUERDA:
+                            </td>
+                            <td>
+                                <select id="esquerdaP2Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PULA:
+                            </td>
+                            <td>
+                                <select id="pulaP2Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CORRE:
+                            </td>
+                            <td>
+                                <select id="correP2Select">
+                                    <option value="65">A</option>
+                                    <option value="66">B</option>
+                                    <option value="67">C</option>
+                                    <option value="68">D</option>
+                                    <option value="69">E</option>
+                                    <option value="70">F</option>
+                                    <option value="71">G</option>
+                                    <option value="72">H</option>
+                                    <option value="73">I</option>
+                                    <option value="74">J</option>
+                                    <option value="75">K</option>
+                                    <option value="76">L</option>
+                                    <option value="77">M</option>
+                                    <option value="78">N</option>
+                                    <option value="79">O</option>
+                                    <option value="80">P</option>
+                                    <option value="81">Q</option>
+                                    <option value="82">R</option>
+                                    <option value="83">S</option>
+                                    <option value="84">T</option>
+                                    <option value="85">U</option>
+                                    <option value="86">V</option>
+                                    <option value="87">W</option>
+                                    <option value="88">X</option>
+                                    <option value="89">Y</option>
+                                    <option value="90">Z</option>
+                                    <option value="32">SPACE</option>
+                                    <option value="16">SHIFT</option>
+                                    <option value="17">CTRL</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <input type="button" id="configButton" value="APLICAR" style="width: 100%" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
