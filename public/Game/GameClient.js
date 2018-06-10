@@ -27,11 +27,11 @@ GameClient.start = function () {
 
     this.queryString = Util.getQueryString();
     this.playerName = GameClient.queryString.playername || "player1";
-    this.onLine = GameClient.queryString.online;
+    this.onLine = GameClient.queryString.online || "0";
 
     
 
-    if (GameClient.offLine) {
+    if (GameClient.onLine == "0") {
         Game.printFrame = function (msg) {
             console.log(msg);
         };
