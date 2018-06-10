@@ -7,7 +7,7 @@
     playersName: [],
     actualFrame: -1,
     syncComplete: true,
-    offLine: true
+    onLine: "0"
 };
 
 
@@ -27,7 +27,7 @@ GameClient.start = function () {
 
     this.queryString = Util.getQueryString();
     this.playerName = GameClient.queryString.playername || "player1";
-    this.offLine = GameClient.queryString.online ? 0 : 1;
+    this.onLine = GameClient.queryString.online;
 
     
 
@@ -36,16 +36,6 @@ GameClient.start = function () {
             console.log(msg);
         };
 
-
-        //var player1 = new SmallMario("player1", {
-        //    top: 10,
-        //    left: 1 * 32,
-        //    direction: Direction.RIGHT,
-        //    keyWalkRight: 68,
-        //    keyWalkLeft: 65,
-        //    keyJump: 87,
-        //    keyRun: 16
-        //});
 
         var player1 = new SmallMario("player1", {
             top: 10,
@@ -90,6 +80,7 @@ GameClient.start = function () {
         Game.start();
     }
     else {
+        
         this.ioSocket = io.connect('/');
         this.ioSocket.on('test', function (msg) {
             GameClient.printFrame(msg);
@@ -161,18 +152,14 @@ GameClient.animate = function () {
 
     var obj = this;
 
-    if (GameClient.offLine) {
-        var ret = Game.sync(params);
-        obj.syncServer(ret);
-        setTimeout(function () {
-            obj.animate();
-        }, 1000 / obj.framePerSecond);
-    }
-    else {
+    if (GameClient.onLine == "2")
+    {
         if (GameClient.syncComplete) {
-            //this.ioSocket.emit("sync", params);
+            this.ioSocket.emit("sync", params);
         }
-
+    }
+    else if (GameClient.onLine == "1")
+    {
         $.ajax({
             url: "/remotegame/sync",
             async: false,
@@ -191,6 +178,15 @@ GameClient.animate = function () {
 
         });
     }
+    else
+    {
+        var ret = Game.sync(params);
+        obj.syncServer(ret);
+        setTimeout(function () {
+            obj.animate();
+        }, 1000 / obj.framePerSecond);
+    }
+
 
     var teste = "";
 
