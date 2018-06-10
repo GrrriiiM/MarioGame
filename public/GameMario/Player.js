@@ -1,6 +1,6 @@
 ﻿/// <reference path="../Game/ControlableShape.js" />
 
-var moveVelocity = 0.5;
+var moveVelocity = 1;
 
 var Player = (function (parent) {
 
