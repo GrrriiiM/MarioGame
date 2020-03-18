@@ -17,7 +17,7 @@ var Mushroom = (function (parent) {
 
         this.direction = Direction.RIGHT;
         this.color = "";
-        this.name = "Mushroom";
+        this.name = "mushroom";
         this.imagePath = "images";
         this.imageExtension = ".png";
         this.height = 32;
