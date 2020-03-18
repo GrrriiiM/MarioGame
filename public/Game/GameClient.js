@@ -1,5 +1,5 @@
 ﻿var GameClient = {
-    framePerSecond: 60,
+    framePerSecond: 30,
     height: 500,
     width: 500,
     keys: {},
