@@ -1,9 +1,10 @@
 ﻿/// <reference path="../Game/ControlableShape.js" />
 
-var moveVelocity = 1;
+
 
 var Enemy = (function (parent) {
 
+    var moveVelocity = 1 * Game.speedVariant;
     Enemy.prototype = new MoveableShape();
     Enemy.prototype.constructor = Enemy;
 

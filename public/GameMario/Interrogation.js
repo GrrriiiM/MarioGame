@@ -1,7 +1,7 @@
-﻿var moveVelocity = 1;
+﻿
 
 var Interrogation = (function (parent) {
-
+    var moveVelocity = 0.5 * Game.speedVariant;
     Interrogation.prototype = new MoveableShape();
     Interrogation.prototype.constructor = Interrogation;
 

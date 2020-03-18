@@ -1,9 +1,9 @@
 ﻿/// <reference path="../Game/ControlableShape.js" />
 
-var moveVelocity = 1;
+
 
 var WalkTurtle = (function (parent) {
-
+    var moveVelocity = 1 * Game.speedVariant;
     WalkTurtle.prototype = new Enemy();
     WalkTurtle.prototype.constructor = WalkTurtle;
 
@@ -35,14 +35,14 @@ var WalkTurtle = (function (parent) {
             steps: [
                 new StepShapeAnimation({
                     step: 0,
-                    time: 150,
+                    time: 200,
                     onAfterAnimate: function (step) {
                         step.shapeAnimation.shape.imageName = step.shapeAnimation.shape.imageName + "_" + step.shapeAnimation.shape.getDirectionImageName() + "_red";
                     }
                 }),
                 new StepShapeAnimation({
                     step: 1,
-                    time: 150,
+                    time: 200,
                     onAfterAnimate: function (step) {
                         step.shapeAnimation.shape.imageName = step.shapeAnimation.shape.imageName + "_" + step.shapeAnimation.shape.getDirectionImageName() + "_red";
                     }
@@ -58,7 +58,7 @@ var WalkTurtle = (function (parent) {
             id: "move",
             endPosition: shape.endPositionLeft,
             distance: shape.distanceLeft,
-            velocity: 100,
+            velocity: 50 * moveVelocity,
             direction: Direction.LEFT
         });
 
@@ -75,7 +75,7 @@ var WalkTurtle = (function (parent) {
             id: "move",
             endPosition: shape.endPositionRight,
             distance: shape.distanceRight,
-            velocity: 100,
+            velocity: 50 * moveVelocity,
             direction: Direction.RIGHT
         });
 

@@ -1,9 +1,9 @@
 ﻿/// <reference path="../Game/ControlableShape.js" />
 
-var moveVelocity = 1;
+
 
 var Player = (function (parent) {
-
+    var moveVelocity = 1 * Game.speedVariant;
     Player.prototype = new ControlableShape();
     Player.prototype.constructor = Player;
 
@@ -69,9 +69,9 @@ var Player = (function (parent) {
     var createRunRight = function (shape) {
         return new AccelerateMoveable(shape, {
             id: "runRight",
-            velocity: 100 * moveVelocity,
-            endVelocity: 200 * moveVelocity,
-            accelerate: 500 * moveVelocity,
+            velocity: 150 * moveVelocity,
+            endVelocity: 175 * moveVelocity,
+            accelerate: 300 * moveVelocity,
             direction: Direction.RIGHT,
             keys: [shape.keyWalkRight, shape.keyRun]
         })
@@ -80,7 +80,7 @@ var Player = (function (parent) {
     var createRunFastRight = function (shape) {
         var moveable = new ContinuousMoveable(shape, {
             id: "runFastRight",
-            velocity: 200 * moveVelocity,
+            velocity: 175 * moveVelocity,
             direction: Direction.RIGHT,
             keys: [shape.keyWalkRight, shape.keyRun]
         });
@@ -114,9 +114,9 @@ var Player = (function (parent) {
     var createRunLeft = function (shape) {
         return new AccelerateMoveable(shape, {
             id: "runLeft",
-            velocity: 100 * moveVelocity,
-            endVelocity: 200 * moveVelocity,
-            accelerate: 500 * moveVelocity,
+            velocity: 150 * moveVelocity,
+            endVelocity: 175 * moveVelocity,
+            accelerate: 300 * moveVelocity,
             direction: Direction.LEFT,
             keys: [shape.keyWalkLeft, shape.keyRun]
         })
@@ -125,7 +125,7 @@ var Player = (function (parent) {
     var createRunFastLeft = function (shape) {
         var moveable = new ContinuousMoveable(shape, {
             id: "runFastLeft",
-            velocity: 200 * moveVelocity,
+            velocity: 175 * moveVelocity,
             direction: Direction.LEFT,
             keys: [shape.keyWalkLeft, shape.keyRun]
         });

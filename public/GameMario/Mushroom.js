@@ -1,9 +1,9 @@
 ﻿/// <reference path="../Game/ControlableShape.js" />
 
-var moveVelocity = 1;
 
 var Mushroom = (function (parent) {
 
+    var moveVelocity = 0.5 * Game.speedVariant;
     Mushroom.prototype = new MoveableShape();
     Mushroom.prototype.constructor = Mushroom;
 

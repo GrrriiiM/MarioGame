@@ -12,7 +12,7 @@ var Game = {
     events: {},
     playersName: [],
     actualFrame: -1,
-    speedVariant: 2
+    speedVariant: 0.7
 		
 }
 	
