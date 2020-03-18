@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="public/scripts/jquery-1.7.1.min.js"></script>
+    <script src="public/scripts/_references.js"></script>
+    <script src="public/scripts/socket.io.js"></script>
+    <script src="public/Game/Base.js"></script>
+    <script src="public/Game/Util.js"></script>
+    <script src="public/Game/Container.js"></script>
+    <script src="public/Game/Drawer.js"></script>
+    <script src="public/Game/Shape.js"></script>
+    <script src="public/Game/CSSDrawer.js"></script>
+    <script src="public/Game/Scenario.js"></script>
+    <script src="public/Game/Direction.js"></script>
+    <script src="public/Game/Moveable.js"></script>
+    <script src="public/Game/MoveableShape.js"></script>
+    <script src="public/Game/ContinuousMoveable.js"></script>
+    <script src="public/Game/Game.js"></script>
+    <script src="public/Game/GameClient.js"></script>
+    <script src="public/Game/Direction.js"></script>
+    <script src="public/Game/KeyControl.js"></script>
+    <script src="public/Game/ControlableShape.js"></script>
+    <script src="public/GameMario/Player.js"></script>
+
+    <script src="public/GameMario/ScenarioTest.js"></script>
+    <script src="public/Game/ShapeAnimation.js"></script>
+    <script src="public/Game/StatusShapeAnimation.js"></script>
+    <script src="public/Game/StepShapeAnimation.js"></script>
+    <script src="public/Game/AccelerateMoveable.js"></script>
+
+    <script src="public/GameMario/SmallMario.js"></script>
+    <script src="public/GameMario/SmallLuigi.js"></script>
+    <script src="public/GameMario/TallMario.js"></script>
+
+    <script src="public/GameNovo/NewPlayer.js"></script>
+    <script src="public/GameNovo/Person.js"></script>
+    <script src="public/GameNovo/MegaMan.js"></script>
+
+    <script src="public/GameMario/BlockType.js"></script>
+    <script src="public/GameMario/Block.js"></script>
+    <script src="public/GameMario/BlockGrass.js"></script>
+    <script src="public/GameMario/Mushroom.js"></script>
+    <script src="public/GameMario/Enemy.js"></script>
+    <script src="public/GameMario/WalkTurtle.js"></script>
+    <script src="public/GameMario/Interrogation.js"></script>
+    <script src="public/GameMario/EmptyBlock.js"></script>
+    <script src="public/GameMario/BigGrassDecorator1.js"></script>
+    <script src="public/GameMario/BigGrassDecorator2.js"></script>
+    <script src="public/GameMario/BlockCreator.js"></script>
+    <script src="public/GameMario/PipeCreator.js"></script>
+    <script src="public/GameMario/PipeColor.js"></script>
+    <script src="public/GameMario/DecorationCreator.js"></script>
+    <script src="public/GameMario/DecorationType.js"></script>
+    <script src="public/GameMario/Scenario1.js"></script>
+    <script src="public/Game/ShapeImage.js"></script>
+    <script>
+
+
+        $(function () {
+
+            $(document).on("keydown", keyDown);
+            $(document).on("keyup", keyUp);
+
+            GameClient.playersName.push("player1");
+            GameClient.start();
+            
+
+            //var player1 = new SmallMario("player1", {
+            //    top: 10,
+            //    left: 1 * 32,
+            //    direction: Direction.RIGHT,
+            //    keyWalkRight: 68,
+            //    keyWalkLeft: 65,
+            //    keyJump: 87,
+            //    keyRun: 16
+            //});
+
+
+            //var player2 = new SmallLuigi("player2", {
+            //    top: 10,
+            //    left: 20 * 32,
+            //    direction: Direction.LEFT,
+            //    keyWalkRight: 75,
+            //    keyWalkLeft: 72,
+            //    keyJump: 85,
+            //    keyRun: 76
+            //});
+
+
+
+            //Game.scenario = new Scenario1({
+            //    "player1": player1
+            //    //, "player2": player2
+            //});
+            //Game.playersName.push("player1");
+            //Game.framePerSecond = 60;
+            //Game.height = 450;
+            //Game.width = 700;
+            //Game.jQueryContainer = $("#game");
+            //Game.printFrame = function (msg) {
+            //    $("#logFrame").html(msg);
+            //};
+
+
+            //$("#fpsText").val(Game.framePerSecond);
+
+            //$("#direitaP1Select").val(player1.keyWalkRight);
+            //$("#esquerdaP1Select").val(player1.keyWalkLeft);
+            //$("#pulaP1Select").val(player1.keyJump);
+            //$("#correP1Select").val(player1.keyRun);
+
+            //$("#direitaP2Select").val(player2.keyWalkRight);
+            //$("#esquerdaP2Select").val(player2.keyWalkLeft);
+            //$("#pulaP2Select").val(player2.keyJump);
+            //$("#correP2Select").val(player2.keyRun);
+
+            $("#configButton").on("click", config);
+
+            Game.start();
+
+        });
+
+        function keyDown(e) {
+            //Game.addKey(e.keyCode);
+            GameClient.addKey(e.keyCode);
+        }
+
+        function keyUp(e) {
+            //Game.removeKey(e.keyCode);
+            GameClient.removeKey(e.keyCode);
+        }
+
+        function config() {
+            var player1 = Game.getShape("player1");
+
+            var player2 = Game.getShape("player2");
+
+            Game.framePerSecond = $("#fpsText").val();
+            player1.keyWalkRight = $("#direitaP1Select").val();
+            player1.keyWalkLeft = $("#esquerdaP1Select").val();
+            player1.keyJump = $("#pulaP1Select").val();
+            player1.keyRun = $("#correP1Select").val();
+            player1.config();
+
+
+            if (player2) {
+                player2.keyWalkRight = $("#direitaP2Select").val();
+                player2.keyWalkLeft = $("#esquerdaP2Select").val();
+                player2.keyJump = $("#pulaP2Select").val();
+                player2.keyRun = $("#correP2Select").val();
+                player2.config();
+            }
+
+            // $.ajax({
+            //     url: "/remotegame",
+            //     async: false,
+            //     data: { name: "teste allison" },
+            //     dataType: "json",
+            //     cache: false,
+            //     success: function (a, b, c) {
+            //         alert(a.name);
+            //     }
+            // });
+
+        }
+
+    </script>
+</head>
+<body>
+    <div id="logFrame"></div>
+    <div id="game" style="background-color: yellowgreen; height: 500px; width: 700px; overflow: hidden; float: left"></div>
+</body>
+</html>
