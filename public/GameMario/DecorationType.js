@@ -6,7 +6,7 @@
 
     getShape: function (id, params) {
         params.color = "";
-        params.imagePath = "Images";
+        params.imagePath = "images";
         params.imageExtension = ".png";
         switch (params.decorationType) {
             case DecorationType.BIG_GRASS_1:

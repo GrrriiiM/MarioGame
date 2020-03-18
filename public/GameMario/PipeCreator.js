@@ -32,7 +32,7 @@ var PipeCreator = {
         params.impactBottom = true,
         params.color = "";
         params.imageExtension = ".png";
-        params.imagePath = "Images";
+        params.imagePath = "images";
         var shape = new Shape(id, params);
         
         var top = 0;
