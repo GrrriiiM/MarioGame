@@ -23,7 +23,7 @@ GameClient.start = function () {
     this.printFrame = function (msg) {
         $("#logFrame").html( $("#logFrame").html().substring(0,100) + msg);
     };
-    this.framePerSecond = 60;
+    this.framePerSecond = 30;
 
     this.queryString = Util.getQueryString();
     this.playerName = GameClient.queryString.playername || "player1";
