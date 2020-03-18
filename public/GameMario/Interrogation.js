@@ -17,7 +17,7 @@ var Interrogation = (function (parent) {
         parent.call(this, id, params);
 
         this.color = "";
-        this.name = "Interrogation";
+        this.name = "interrogation";
         this.imagePath = "images";
         this.imageExtension = ".png";
         this.height = 32;
